@@ -1,9 +1,10 @@
 import  React, {useReducer,useContext} from 'react'
 import {prodforContext} from '../App'
+
 function myStateReducer(state,action){
     return(action.payload)
 }
-function ProductsForm(props) {
+function ProductsForm() {
     const value =useContext(prodforContext)
 const[state,dispatchState]=useReducer( myStateReducer,{
     
@@ -11,6 +12,7 @@ const[state,dispatchState]=useReducer( myStateReducer,{
 
     isPurchased: false
     })
+
 
 const handleChange = event => {
     dispatchState({type:'updateState',payload:{ [event.target.id]:event.target.value}})

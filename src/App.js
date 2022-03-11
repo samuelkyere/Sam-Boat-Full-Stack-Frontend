@@ -1,8 +1,8 @@
 import axios from 'axios'
 import React, {createContext} from 'react'
 import './App.css';
-import  {useReducer,useState,useEffect} from 'react'
-import ProductsForm from './components/ProductsForm'
+import  {useState,useEffect} from 'react'
+// import ProductsForm from './components/ProductsForm'
 import Feedback from './components/Feedback';
 import {Routes,Route,BrowserRouter} from 'react-router-dom';
 import Home from './components/Home';
@@ -11,7 +11,12 @@ import Contact from './components/Contact';
 import Error from './components/Error'
 import Nav from './components/Nav';
 import TimeZone from './components/TimeZone'
-
+import ProductService from "./ProductService" 
+import SpecialForm from './components/SpecialForm';
+import View from './components/View';
+import AddProduct from './components/AddProduct';
+import Delete from './components/Delete';
+import UpdateProduct from './components/UpdateProduct'
 export const prodforContext= createContext()
 function App() {
   const [state,setState] = useState({search_results:[{title:''}]});
@@ -29,6 +34,15 @@ function App() {
       
     
   }
+   const [state1, setState1] = useState([]);
+   const allSpecialProducts = async () => {
+    
+     const special = await ProductService.getProductByName(searchSpecial)
+   }
+   const [searchSpecial,setSearchSpecial]=useState('');
+  //  useEffect(()=>{
+  //    allSpecialProducts()},[searchSpecial]
+  //  )
 
   const [searchHistory,setSearchHistory]=useState('');
   useEffect(() => {
@@ -37,8 +51,23 @@ function App() {
   useEffect(() => {
     allTimeData()}, [showdisplay]
   )
-  // console.log(state)
+  console.log(state)
+  const handleSubmit1 = event => {
+    console.log(event.target.name.value)
+   
+    event.preventDefault();
+    setSearchSpecial(event.target.name.value);
+    allSpecialProducts()
+  }
+
+  const handleSubmit2 = data => { 
+    ProductService.getProductByName(data).then(res =>{
+      setState1(res.data)
+    })
+
+  }
 const  handleSubmit = event => {
+  
    
   //   const form = event.target;
   //   const formData = {
@@ -53,6 +82,8 @@ const  handleSubmit = event => {
   allData()
   // clearForm(form);
   
+  
+  
   }
   return (
     <BrowserRouter>
@@ -61,6 +92,11 @@ const  handleSubmit = event => {
     <h1>Sam Boat Ventures - 'Higher Than The Highest'</h1>
       <Nav/>
       <Routes>
+        <Route path='update' element={<UpdateProduct handleSubmit={handleSubmit}/>}/>
+        <Route path='delete' element={<Delete handleSubmit={handleSubmit}/>}/>
+        <Route path='addProducts' element={<AddProduct/>}/>
+        <Route path='view/:id' element={<View handleSubmit={handleSubmit}/>}/>
+        <Route path='special' element={<SpecialForm handleSubmit2={handleSubmit2}/>}/>
         <Route path='/' element= {<Home handleSubmit={handleSubmit} bothname={state.search_results} />}/>
         <Route path='home' element={<Home handleSubmit={handleSubmit} bothname={state.search_results}/>} />
         <Route path='about' element={<About/>}/>

@@ -2,7 +2,7 @@ import React from 'react'
 function About() {
     return(
         <div className='ab'>
-            <h2>Who We Are, What We Do, Why you Should Work With Us </h2>
+            <h2>Who We Are, What We Do, Why You Should Work With Us </h2>
             <p> Samboat Ventures is an  E-market  firm that deals in products from all over the world, ranging from produce: fresh  and processed, organic and inorganic to household equipment, technological accessories,
                 to furniture and other general products as well.  </p>
             <p> The firm was established late 2019 (at the beginning of the pandemic to meet the high demand of the society and also to provide a safe and secured virtual market for society and since then has served and  still continues to serve its great and valued customers  </p>
